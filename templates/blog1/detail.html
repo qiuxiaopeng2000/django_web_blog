@@ -1,0 +1,330 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    {{ blog.title }}
+{% endblock %}
+
+{% block content %}
+    <div class="containers-fluid">
+        <div class="left-right">
+            <div class="row">
+                <div class="col-md-1"></div>
+
+                <div class="col-md-2">
+                    <div class="id-navigation">
+                        <div class="card text-white bg-primary mb-3" style="max-width: 10rem;">
+                            <div class="card-header">全站导航</div>
+                            <div class="card-body">
+                                <h4 class="card-title">文章分类</h4>
+                                <p class="card-text">
+                                    {% for item in all_category %}
+                                        <a href="{% url 'blog_list_category' item.id %}"
+                                           style="color: white">{{ item.name }}</a>
+                                    {% endfor %}
+                                </p>
+                                {#                                <p class="card-text">Some quick example text to build on the card title and make up the#}
+                                {#                                    bulk of the card's content.</p>#}
+                            </div>
+                            <div class="card-footer">
+                                <h4 class="card-title">文章排序</h4>
+                                <p class="card-text">
+                                    <a href="{% url 'blog_list' %}?search={{ search }}&column={{ category }}"
+                                       style="color: white">
+                                        最新</a>
+                                    <a href="{% url 'blog_list' %}?order=num_of_views&search={{ search }}&column={{ column }}"
+                                       style="color: white">
+                                        最热</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-8">
+                    <div class="blog-detail">
+                        {#正文#}
+                        <div class="blog-title">
+                            <h2>{{ blog.title }}</h2>
+
+                            <div class="blog-data">
+                                <span style="float: left">
+                                    <div class="date">{{ blog.created_time }}</div>
+                                    <div class="date" style="color: black">
+                                        <a href="{% url 'my_blog' blog.author.username %}">
+                                            作者：{{ blog.author }}
+                                        </a>
+                                        <span>
+                                            <a href="{% url 'follow_other' user.id blog.author.id blog.id %}"
+                                               onclick="myFunc1()"
+                                               class="fa fa-plus-square my-demo" aria-hidden="true"
+                                               style="color: black">
+                                                关注
+                                            </a>
+                                        </span>
+                                    </div>
+                                    <img src="/static/icon/browse.png" alt="浏览量">
+                                    {{ blog.num_of_views }}
+                                    <img src="/static/icon/like.png" onclick="try_to_like(
+                                            '{% url 'article_likes' blog.id %}',
+                                            '{{ blog.id }}',
+                                            '{{ blog.num_of_likes }}'
+                                            )" alt="点赞量">
+                                    <span id="likes_number">{{ blog.num_of_likes }}</span>
+                                    <img src="/static/icon/comment.png" alt="评论量">
+                                    {{ blog.comments.count }}&nbsp;&nbsp;
+
+{#                                    <div style="text-align:center;" class="mt-4">#}
+{#                                        <button class="fa fa-heart"#}
+{#                                        type="button"#}
+{#                                        onclick="try_to_like(#}
+{#                                                '{% url 'article_likes' blog.id %}',#}
+{#                                                '{{ blog.id }}',#}
+{#                                                '{{ blog.num_of_likes }}'#}
+{#                                                )">#}
+{#                                    <span id="likes_number">#}
+{#                                        {{ blog.num_of_likes }}#}
+{#                                    </span>#}
+{#                                </button>#}
+{#                            </div>#}
+
+                                </span>
+
+                                {% if user == blog.author %}
+                                    <span style="float: right">
+                                    <a type="button" class="btn btn-primary btn-sm" href="#"
+                                       onclick="confirm_safe_delete()">删除</a>
+                                        <form
+                                                style="display:none;"
+                                                id="safe_delete"
+                                                action="{% url 'delete_blog' blog.id %}"
+                                                method="POST">
+                                            {% csrf_token %}
+                                        <button type="submit">发送</button>
+                                        </form>
+                                    <a type="button" class="btn btn-primary btn-sm"
+                                       href="{% url 'update_blog' blog.id %}">修改</a>
+                                </span>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        {% include 'splitline.html' %}
+
+                        <div class="blog-body">
+                            <p>{{ blog.body | safe }}</p>
+                        </div>
+
+                        {% if blog.is_original == False %}
+                            <div class="p">文章转载于原作者
+                                <a href="{% url 'my_blog' blog.from_author.author %}">
+                                    {{ blog.from_author.author }}
+                                </a>
+
+                            </div>
+                        {% endif %}
+
+                        <div>
+                            <span style="float:right">
+                                <a href="{% url 'transmit_blog' blog.id %}" style="color: black"
+                                   class="fa fa-share my-demo" aria-hidden="true" onclick="myFunc()">转发</a>
+                            </span>
+                        </div>
+
+                        {% include 'splitline.html' %}
+
+                        {#评论#}
+                        {% if user.is_authenticated %}
+                            <div class="input-comment">
+                                <form action="{% url 'comment_to_blog' blog.id %}" method="post">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <h3 style="margin-top: 5%">Comment</h3>
+                                        {#<textarea type="text" class="form-control-sm" id="body" name="body" rows="2"#}
+                                        {#style="padding-left: 10px"></textarea>#}
+                                        <div>
+                                            {{ create_comment.media }}
+                                            {{ create_comment.body }}
+                                        </div>
+                                    </div>
+
+                                    <div class="button">
+                                        <span>
+                                            <br>
+                                            <button type="submit" class="btn btn-primary btn-sm"
+                                                    style="padding-left: 10px">发表</button>
+                                        </span>
+                                    </div>
+
+                                </form>
+                            </div>
+                        {% else %}
+                            <div>
+                                <br>
+                                <h5 class="row justify-content-center">
+                                    请<a href="{% url 'user_login' %}">登录</a>后回复
+                                </h5>
+                                <br>
+                            </div>
+                        {% endif %}
+
+                        {% include 'splitline.html' %}
+
+                        <!--显示评论-->
+                        <div class="show-comment">
+                            <br>
+                            <h5>共有{{ comments.count }}条评论</h5>
+                            <div>
+                                {% for item in comments %}
+                                    <hr>
+                                    <p>
+                                        <strong>{{ item.comment_user.username }}</strong>于
+                                        <span>{{ item.created_time|date:"Y-m-d H:i:s" }}</span>时发表评论：
+                                    </p>
+                                    {% if request.user.username == item.comment_user.username %}
+                                        <span style="float: right">
+                                        <form style="display: none" method="post"
+                                              action="{% url 'delete_comment' item.id %}">
+                                            {% csrf_token %}
+                                            <button type="submit">发送</button>
+                                        </form>
+                                        <a href="#" onclick="confirm_safe_delete_comment()" class="fa fa-trash-o"
+                                           aria-hidden="true">删除
+                                            <form style="display: none;" id="safe_delete_comment" method="post"
+                                                  action="{% url 'delete_comment' item.id %}">
+                                                {% csrf_token %}
+                                                <button type="submit">发送</button>
+                                            </form>
+                                        </a>
+                                    </span>
+                                    {% endif %}
+                                    <p>{{ item.body|safe }}</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-1"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="containers" style="height: 100%">
+        <div class="container-left">
+            <br>
+            <br>
+
+        </div>
+
+    </div>
+{% endblock content %}
+
+<script src="{% static 'plugins/prism_1.0.1/prism/lib/prism/prism_patched.min.js' %}"></script>
+<link rel="stylesheet" href="{% static 'plugins/prism_1.0.1/prism/lib/prism/prism_patched.min.css' %}">
+{% block script %}
+    <script>
+        $(".django-ckeditor-widget").removeAttr('style');
+    </script>
+    <script>
+        function confirm_safe_delete() {
+            layer.open({
+                title: "确认删除",
+                content: "确认删除这篇文章吗？",
+                yes: function (index) {
+                    $('form#safe_delete button').click();
+                    layer.close(index);
+                },
+            })
+        }
+
+        function confirm_safe_delete_comment() {
+            layer.open({
+                title: "确认删除",
+                content: "确认删除",
+                yes: function (index) {
+                    $('form#safe_delete_comment button').click();
+                    layer.close(index);
+                }
+            })
+        }
+
+        //点赞
+        function try_to_like(url, id, num_of_likes) {
+            //取出localStorage中的数据
+            let storage = window.localStorage;
+            //获取localstorage中的数据，如果没有说明之前没访问过该界面
+            const storage_str_date = storage.getItem("blog_data");
+            //localStorage存储的是字符串，需转换为js对象
+            let storage_json_data = JSON.parse(storage_str_date);
+            //数据不存在，创建一个新字典，存储点赞数据
+            if (!storage_json_data) {
+                storage_json_data = {};
+            }
+            //检查是否点过赞
+            const status = check_islike(storage_json_data, id);
+            if (status) {
+                layer.msg('不能重复点赞哦');
+                return;
+            } else {
+                //没点过赞就找到文章的点赞数，+1，并把颜色改为红色
+                $('span#likes_number').text(num_of_likes + 1).css('color', '#dc3545');
+            }
+
+
+            {#$('span#likes_number').parent().addClass("red");#}
+            $.post(
+                url,
+                {},
+                function (result) {
+                    if (result === "success") {
+                        try {
+                            storage_json_data[id] = true;
+                        } catch (e) {
+                            window.localStorage.clear();
+                        }
+
+                        //还原程字符串，方便存到localstorage中
+                        const d = JSON.stringify(storage_json_data);
+                        try {
+                            storage.setItem("blog_data", d);
+                        } catch (e) {
+                            if (e.code === 22) {
+                                window.localStorage.clear();
+                                storage.setItem("blog_data", d);
+                            }
+                        }
+
+
+                    } else {
+                        layer.msg("与服务器通信失败，请稍后再试哦~");
+                    }
+                }
+            )
+        }
+
+        //辅助函数，验证是否点过赞
+        function check_islike(data, id) {
+            try {
+                if (id in data && data[id]) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } catch (e) {
+                window.localStorage.clear();
+                return false;
+            }
+        }
+
+        function myFunc() {
+            alert("转发成功");
+
+        }
+
+        function myFunc1() {
+            alert("关注成功");
+        }
+
+    </script>
+{% endblock script %}

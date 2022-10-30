@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/static/plugins/bootstrap.min%20(1).css">
+    <link rel="stylesheet" href="/static/plugins/font-awesome-4.7.0/css/font-awesome.css">
+    <style>
+        .account {
+            width: 500px;
+            border: 1px solid #dddddd;
+            border-radius: 5px;
+            {#box-shadow: 5px 5px 20px #aaa;#}
+
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 100px;
+            padding: 20px 40px;
+        }
+
+        .account h1 {
+            margin-top: 10px;
+            text-align: center;
+        }
+        h1, h2, h3, h4, h5, h6, p {
+        font-family: "Cabin Sketch", cursive, SimHei;
+    }
+    </style>
+</head>
+
+<body>
+<div class="account">
+    <h1>用户登录</h1>
+    <form method="post" action="{% url 'user_login' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="username">用户名</label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Username">
+            <small class="form-text text-muted ml-1">
+                还没有账号？
+                <a href="{% url 'user_register' %}" style="color: cornflowerblue; ">
+                    注册新账号
+                </a>
+            </small>
+        </div>
+        <div class="form-group">
+            <label for="password">密码</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+            <small class="form-text text-muted ml-1">
+                <a class="secondaryAction lay-ui-text" href="{% url 'password_reset_recover' %}">
+                    忘记密码?
+                </a>
+            </small>
+        </div>
+{#        <div class="custom-control custom-checkbox mb-2">#}
+{##}
+{#            <label for="id_remember" class="custom-control-label" style="margin-left: 20px">#}
+{#                保持登录#}
+{#            <input type="checkbox" name="remember" id="id_remember" checked class="custom-control-input"/>#}
+{#        </div>#}
+        <button type="submit" class="btn btn-primary">登录</button>
+        {#        <a href="{% url 'user_login' %}" class="btn btn-primary">登录</a>#}
+        {#        <a href="{% url 'user_register' %}" class="btn btn-primary">注册</a>#}
+        {#        <a href="{% url 'password_reset_recover' %}" class="btn btn-primary">找回</a>#}
+    </form>
+</div>
+<div class="account" style="display: flex; justify-content: center; align-items: center">
+    <div>
+        其它方式登录:
+    </div>
+    <div>
+        <span style="margin-left: 10px">
+            <a class="fa fa-github" aria-hidden="true" href="#"></a>
+        </span>
+        <span style="margin-left: 5px">
+            <a class="fa fa-weixin" aria-hidden="true" href="#"></a>
+        </span>
+        <span style="margin-left: 5px">
+            <a class="fa fa-weibo" aria-hidden="true" href="#"></a>
+        </span>
+    </div>
+</div>
+</body>
+</html>

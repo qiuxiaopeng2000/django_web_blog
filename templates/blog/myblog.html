@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}
+    首页
+{% endblock title %}
+
+
+{% block content %}
+    <div class="container-sm" style="width: 60%">
+        <div class="container-fluid">
+            {% for blog in my_blogs %}
+                <div class="blog">
+                    <div class="title" style="color: black">{{ blog.title }}</div>
+                    <div class="date">{{ blog.created_time|date:'Y-m-d H:i:s' }}</div>
+                    <div>
+                        <p class="desc" style="color: black">{{ blog.body|slice:'200'|safe }}...</p>
+                    </div>
+
+                    <div>
+                        <a href="{% url 'blog_detail' blog.id %}" class="detail">阅读本文</a>
+                    </div>
+                </div>
+                <hr>
+            {% endfor %}
+        </div>
+
+    </div>
+
+
+{% endblock content %}
+
+

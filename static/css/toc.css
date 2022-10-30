@@ -1,0 +1,37 @@
+
+.u-list-inline {
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+
+.g-ml-15 {
+    margin-left: 1.07143rem !important;
+}
+
+.u-link-v5 {
+    text-decoration: none;
+    transition: all .2s;
+}
+
+.u-link-v5:hover, .u-link-v5:focus {
+    text-decoration: none;
+}
+
+/* Color Aqua */
+.g-color-aqua {
+    color: #29d6e6;
+}
+
+.g-color-aqua--hover:hover {
+    color: #29d6e6 !important;
+}
+
+/* Color Red */
+.g-color-red {
+    color: #f00 !important;
+}
+
+.g-color-red--hover:hover {
+    color: #f00 !important;
+}

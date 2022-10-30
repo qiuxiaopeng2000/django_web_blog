@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}
+    首页
+{% endblock title %}
+
+{% block content %}
+        <div>
+        <ul class="nav nav-tabs justify-content-center " style="background-color: transparent;">
+            {% for item in all_category %}
+                <li class="nav-item" role="presentation" style="margin-left: 5px" >
+                    <a href="{% url 'blog_list_category' item.id %}" class="nav-link"
+                       style="color: black">{{ item.name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+
+    <div class="containers">
+        <div class="container-left">
+            <div class="cards">
+                <div class="counter">
+                    <a class="btn btn-success" href="{% url 'blog_list' %}?search={{ search }}&column={{ category }}"
+                       style="color: red">
+                        最新</a>
+                    <a class="btn btn-success"
+                       href="{% url 'blog_list' %}?order=num_of_views&search={{ search }}&column={{ column }}"
+                       style="color: red">
+                        最热</a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="container-right">
+            <!-- 搜索提示语 -->
+            {% if search %}
+                {% if blogs %}
+                    <h4><span style="color: red">"{{ search }}"</span>的搜索结果如下：</h4>
+                    <hr>
+                {% else %}
+                    <h4>暂无<span style="color: red">"{{ search }}"</span>有关的文章。</h4>
+                    <hr>
+                {% endif %}
+            {% endif %}
+
+            {% for blog in blogs %}
+                <div class="blog">
+                    <div class="title" style="color: black">{{ blog.title }}</div>
+                    <div class="date fas fa-clock">{{ blog.created_time|date:'Y-m-d H:i:s' }}</div>
+                    <div>
+                        <p class="desc" style="color: black">{{ blog.body|slice:'100'|safe }}...</p>
+                    </div>
+
+                    <div>
+                        <a href="{% url 'blog_detail' blog.id %}" class="detail">阅读本文</a>
+                    </div>
+                    <!-- 注脚 -->
+                    <p>
+                        <!-- 附加信息 -->
+                        <span>
+                        <i class="fa fa-eye" style="color: lightskyblue;"></i>
+                        {{ blog.num_of_views }}&nbsp;&nbsp;&nbsp;
+                        </span>
+                        <span>
+                        <i class="fa fa-comments" style="color: yellowgreen;"></i>
+                        {{ blog.comments.count }}&nbsp;&nbsp;&nbsp;
+                        </span>
+                        <span>
+                            <i class="fa fa-thumbs-up" aria-hidden="true" style="color: red">{{ blog.num_of_likes }}</i>
+                        </span>
+                    </p>
+                </div>
+                <hr>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}
+
+<style>
+    .content {
+        min-height: 100%;
+    }
+
+    .content-inside {
+        padding: 20px;
+        padding-bottom: 50px;
+    }
+</style>
+

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>注册</title>
+
+    <!--用百度的静态资源库的cdn安装bootstrap环境-->
+    <!-- Bootstrap 核心 CSS 文件 -->
+    <link href="/static/plugins/bootstrap.min%20(1).css" rel="stylesheet">
+    <!--font-awesome 图标 文件-->
+    <link href="/static/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- 在bootstrap.min.js 之前引入 -->
+    <script src="/static/plugins/jquery-3.6.1.js"></script>
+    <!-- Bootstrap 核心 JavaScript 文件 依赖于jquery-->
+    <script src="/static/plugins/bootstrap/js/bootstrap.js"></script>
+    <style>
+        .account {
+            width: 500px;
+            border: 1px solid #dddddd;
+            border-radius: 5px;
+            box-shadow: 5px 5px 20px #aaa;
+
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 100px;
+            padding: 20px 40px;
+        }
+
+        .account h1 {
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="account">
+    <div class="form row">
+        <form class="form-horizontal col-sm-offset col-md-offset-3 " method="post" action=".">
+            <h1 class="form-title">请填写你的信息，完成注册</h1>
+            <div class="col-sm-9 col-md-9">
+                <form method="post" action=".">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <!--        用户名图标和用户名输入框            -->
+                        <label for="username">用户名</label>
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        <input class="form-control required" type="text" name="username" id="username"
+                               placeholder="请输入用户名" required>
+                    </div>
+                    <!--        邮箱                -->
+                    <div class="form-group">
+                        <label for="email">邮箱</label>
+                        <i class="fa fa-envelope" aria-hidden="true"></i>
+                        <input class="form-control required" type="text" name="email" id="email"
+                               placeholder="请输入邮箱"
+                               required>
+                    </div>
+                    <!--        密码图标和密码输入框                -->
+                    <div class="form-group">
+                        <label for="password">密码</label>
+                        <i class="fa fa-key" aria-hidden="true"></i>
+                        <input class="form-control required" type="password" name="password" id="password"
+                               placeholder="请输入密码" required>
+                    </div>
+                    <!--          确认密码              -->
+                    <div class="form-group">
+                        <label for="password2">确认密码</label>
+                        <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                        <input class="form-control required" type="password" name="password2" id="password2"
+                               placeholder="请确认密码" required>
+                    </div>
+
+
+                    <div class="form-group">
+                    </div>
+
+                    <!--注册和返回按钮-->
+                    <div class="form-group">
+                        <input type="submit" value="注册" class="btn btn-success pull-right "
+                               onclick="register_success()">
+                        <a href="{% url 'user_login' %}">
+                            <input type="button" 
+                                   class="btn btn-info pull-left" id="back_btn" value="返回"/>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    function register_success(){
+         alert("注册成功");
+     }
+</script>
+</body>
+</html>

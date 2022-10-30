@@ -1,0 +1,68 @@
+{% extends "base.html" %} {% load static %}
+{% block title %} 用户信息 {% endblock title %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <br>
+                <div class="col-md-4">用户名: {{ user.username }}</div>
+                <br>
+                {% if user_info.portrait %}
+                    <div class="col-md-4">头像</div>
+                    <img src="{{ user_info.portrait.url }}" style="max-width: 20%; border-radius: 15%;"
+                         class="col-md-4" alt="">
+                {% else %}
+                    <h5 class="col-md-4">暂无头像</h5>
+                {% endif %}
+                <br>
+                <br>
+                <form method="post" action="." enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <!--头像-->
+                    <div class="form-group col-md-4">
+                        <label for="portrait">上传头像</label>
+                        <input type="file" class="form-control-file" name="portrait" id="portrait">
+                    </div>
+                    <!--背景图-->
+                    <div class="form-group col-md-4">
+                        <label for="background_img">上传背景图</label>
+                        <input type="file" class="form-control-file" name="background_img" id="background_img">
+                    </div>
+
+                    <!-- phone -->
+                    <div class="form-group col-md-4">
+                        <label for="phone">电话</label>
+                        <input type="text" class="form-control" id="phone" name="phone" value="{{ user_info.phone }}">
+                    </div>
+                    <!--age-->
+                    <div class="form-group col-md-4">
+                        <label for="age">年龄</label>
+                        <input type="number" class="form-control" id="age" name="age" value="{{ user_info.age }}">
+                    </div>
+                    <!--sex-->
+                    <div class="form-group col-md-4">
+                        <label for="sex">性别</label>
+                        <select class="form-control col-3" id="sex" name="sex">
+                            <option value="none">sex</option>
+                            <option value="男">男</option>
+                            <option value="女">女</option>
+                        </select>
+                    </div>
+                    <!-- self_introduce -->
+                    <div class="form-group col-md-4">
+                        <label for="self_introduce">简介</label>
+                        <textarea type="text" class="form-control" id="self_introduce" name="self_introduce"
+                                  rows="12">{{ user_info.self_introduce }}</textarea>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="signature">个性签名</label>
+                        <textarea type="text" class="form-control" id="signature"
+                                  name="signature">{{ user_info.signature }}</textarea>
+                    </div>
+                    <!-- 提交按钮 -->
+                    <button type="submit" class="btn btn-primary">提交</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

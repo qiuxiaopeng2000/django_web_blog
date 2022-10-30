@@ -1,0 +1,83 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">博客社区</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
+                aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarColor01">
+
+            <!--导航栏-->
+            <ul class="navbar-nav me-auto">
+                <!--点击进入首页-->
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'blog_list' %}" style="margin: 10px">首页
+                        <span class="visually-hidden">(current)</span>
+                    </a>
+                </li>
+                <!--点击发布文章-->
+                <li class="nav-item">
+                    <a class="nav-link" style="margin: 10px" href="{% url 'create_blog' %}">发布</a>
+                </li>
+                {% if user.username %}
+                    <li class="nav-item">
+                        <a class="nav-link" style="margin: 10px" href="{% url 'my_blog' user.username %}">我的</a>
+                    </li>
+                {% endif %}
+                <!--首页其它待实现功能-->
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle " aria-hidden="true" data-toggle="dropdown"
+                           href="#" id="navbarDropdown"
+                           role="button" aria-haspopup="true" aria-expanded="false" style="margin: 10px">
+                            <span class="fa fa-bars"></span>
+                            {# {{ user.username }}#}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown" >
+                            <a class="dropdown-item" href="{% url 'user_info_edit' user.id %}">个人简介</a>
+                            <a class="dropdown-item" href="{% url 'user_logout' %}">退出登录</a>
+                            <a class="dropdown-item" href="#" onclick="user_del()">注销</a>
+                            <a class="dropdown-item" href="{% url 'change_password' user.id %}">修改密码</a>
+                            <a class="dropdown-item" href="{% url 'my_follow' user.id %}">关注列表</a>
+                            <a class="dropdown-item" href="{% url 'my_fans' user.id %}">粉丝列表</a>
+                        </div>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" style="margin: 10px" href="{% url 'user_login' %}">登录/注册</a>
+                    </li>
+                {% endif %}
+                {#                <li class="nav-item">#}
+                {#                    <a class="navbar-link" style="margin: 10px" href=""></a>#}
+                {#                </li>#}
+
+            </ul>
+            <form class="d-flex" action="{% url 'blog_list' %}">
+                <label class="sr-only" for="search"></label>
+                <input class="form-control me-sm-2" type="text" placeholder="Search" id="search" name="search" required>
+                <button class="btn btn-secondary my-2 my-sm-0" type="submit"><span class="fa fa-search"></span></button>
+            </form>
+            <div class="spacer"></div>
+        </div>
+    </div>
+</nav>
+
+
+{% if user.is_authenticated %}
+    <form style="display: none" id="user_del" method="post" action="{% url 'user_delete' user.id %}">
+        {% csrf_token %}
+        <button type="submit">发送</button>
+    </form>
+    <script>
+        function user_del() {
+            layer.open({
+                title: "确认注销",
+                content: "一旦注销信息不可挽回，确认注销吗？",
+                yes: function (index) {
+                    $('form#user_del button').click();
+                    layer.close(index)
+                }
+            })
+        }
+    </script>
+{% endif %}

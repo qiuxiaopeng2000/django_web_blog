@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>点个赞吧</title>
+    <!-- Bootstrap 核心 CSS 文件 -->
+    <link href="/static/plugins/bootstrap.min%20(1).css" rel="stylesheet">
+    <!--font-awesome 图标 文件-->
+    <link href="/static/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- 在bootstrap.min.js 之前引入 -->
+    <script src="/static/plugins/jquery-3.6.1.js"></script>
+    <!-- Bootstrap 核心 JavaScript 文件 依赖于jquery-->
+    <script src="/static/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <style>
+        .button_sy {
+            margin-bottom: 0;
+            font-weight: 400;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            touch-action: manipulation;
+            cursor: pointer;
+            background-image: none;
+            border: 1px solid black;
+            padding: 6px 12px;
+            font-size: 14px;
+            line-height: 1.42857143;
+            border-radius: 4px;
+            user-select: none;
+            background-color: white;
+        }
+
+        .red {
+            color: red;
+            border: 1px solid red;
+        }
+    </style>
+</head>
+<body>
+<div style="text-align:center;" class="mt-4">
+    <button class="button_sy"
+            type="button"
+            onclick="try_to_like(
+                    '{% url 'article_likes' blog.id %}',
+                    '{{ blog.id }}',
+                    '{{ blog.num_of_likes }}'
+                    )"
+    >
+        <span>点赞</span>
+        <span>
+            <i class="fa fa-heart"></i>
+        </span>
+        <span id="likes_number">
+            {{ blog.num_of_likes }}
+        </span>
+    </button>
+</div>
+<!-- 使用layer的弹窗信息 -->
+<script src="/static/plugins/layer-v3.5.1/layer/layer.js"></script>
+<!-- ajax过csrf验证 -->
+<script src="{% static '/plugins/csrf.js' %}"></script>
+<script>
+    //点赞
+    function try_to_like(url, id, num_of_likes) {
+        //取出localStorage中的数据
+        let storage = window.localStorage;
+        //获取localstorage中的数据，如果没有说明之前没访问过该界面
+        const storage_str_date = storage.getItem("blog_data");
+        //localStorage存储的是字符串，需转换为js对象
+        let storage_json_data = JSON.parse(storage_str_date);
+        //数据不存在，创建一个新字典，存储点赞数据
+        if (!storage_json_data) {
+            storage_json_data = {};
+        }
+        //检查是否点过赞
+        const status = check_islike(storage_json_data, id);
+        if (status) {
+            layer.msg('不能重复点赞哦');
+            return;
+        }
+        //没点过赞就找到文章的点赞数，+1，并把颜色改为红色
+        $('span#likes_number').text(num_of_likes + 1);
+        $('span#likes_number').parent().addClass("red");
+        $.post(
+            url,
+            {},
+            function (result) {
+                if (result == "success") {
+                    try {
+                        storage_json_data[id] = true;
+                    } catch (e) {
+                        window.localStorage.clear();
+                    }
+                    ;
+                    //还原程字符串，方便存到localstorage中
+                    const d = JSON.stringify(storage_json_data);
+                    try {
+                        storage.setItem("blog_data", d);
+                    } catch (e) {
+                        if (e.code == 22) {
+                            window.localStorage.clear();
+                            storage.setItem("blog_data", d);
+                        }
+                    }
+                    ;
+
+                } else {
+                    layer.msg("与服务器通信失败，请稍后再试哦~");
+                }
+            }
+        )
+    }
+
+    //辅助函数，验证是否点过赞
+    function check_islike(data, id) {
+        try {
+            if (id in data && data[id]) {
+                return true;
+            } else return false;
+        } catch (e) {
+            window.localStorage.clear();
+            return false;
+        }
+    }
+</script>
+</body>
+</html>

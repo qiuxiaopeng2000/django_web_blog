@@ -1,0 +1,1 @@
+在static文件夹下存放bootstrap、jQuery等资源文件

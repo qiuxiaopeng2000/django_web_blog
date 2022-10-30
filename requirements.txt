@@ -1,0 +1,4 @@
+django~=3.2.5
+markdown~=3.3.4
+django-ckeditor~=6.5.1
+django-mptt~=0.14.0

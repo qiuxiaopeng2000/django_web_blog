@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>this is my blog</title>
+    <!-- Bootstrap 核心 CSS 文件 -->
+    <link href="/static/plugins/bootstrap.min%20(1).css" rel="stylesheet">
+    <!--font-awesome 图标 文件-->
+    <link href="/static/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- 在bootstrap.min.js 之前引入 -->
+    <script src="/static/plugins/jquery-3.6.1.js"></script>
+    <!-- Bootstrap 核心 JavaScript 文件 依赖于jquery-->
+    <script src="/static/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <style>
+        .kongbai {
+            margin-top: 100px;
+
+        }
+
+        /*回到顶部*/
+        .gotop {
+            width: 70px;
+            height: 70px;
+            position: fixed;
+            top: 80%;
+            right: 50%;
+            margin-right: -725px;
+            display: none;
+            cursor: pointer;
+        }
+
+        .gotop img {
+            width: 100%;
+            height: 100%;
+        }
+
+    </style>
+
+</head>
+<body>
+<!-- 导航栏 -->
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+{#        <span class="navbar-header">#}
+{#            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"#}
+{#                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">#}
+{#                <span class="sr-only">Toggle navigation</span>#}
+{#                <span class="icon-bar"></span>#}
+{#                <span class="icon-bar"></span>#}
+{#                <span class="icon-bar"></span>#}
+{#            </button>#}
+{#            <a class="navbar-brand" href="#">我的博客社区</a>#}
+{#        </span>#}
+        <a class="navbar-brand" href="#">我的博客社区</a>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">文 章<span class="sr-only">(current)</span></a></li>
+                <li><a href="#">Link</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Dropdown <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">One more separated link</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="navbar-form navbar-left">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search">
+                </div>
+                <button type="submit" class="btn btn-default">search</button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">注 册</a></li>
+                <li class="active"><a href="#">登 陆</a></li>
+                <li><a href="#">发布文章</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+<div class="container-fluid kongbai">
+    <div class="row">
+        <div class="col-sm-1" style="background-color: black">.col-md-1</div>
+        <div class="col-sm-3" style="height: 1000px">
+            <span style="padding-left: 100px;padding-right: 50px">
+                最 新
+            </span>
+            <span style="padding-left: 50px;padding-right: 100px">
+                最 热
+            </span>
+            的教案课件第三款触控领导哦对我方立场去死啊尽快达成i啥都撒i按时间承诺书按摩IC的骄傲付款流程ask了现场情况是打开拉萨
+        </div>
+        <div class="col-sm-6" style="background-color: black">.col-md-1</div>
+        <div class="col-sm-2">.col-md-1</div>
+    </div>
+</div>
+<!--返回顶部-->
+<div class="gotop">
+    <img src="/static/image/img_bg_1.jpg">
+</div>
+
+<div style="height: 2000px">
+    111
+</div>
+<script type="text/javascript">
+    window.onload = function () {
+        var divs = document.querySelector(".gotop");
+        //获取可视区域的高度;
+        var clientH = document.documentElement.clientHeight;
+        var timer = null;
+        var Ontop = document.documentElement.scrollTop || document.body.scrollTop;//兼容性设置;
+
+        window.onscroll = function () {
+            //获得滚动条到顶部的距离
+            Ontop = document.documentElement.scrollTop || document.body.scrollTop;//兼容性设置;
+            if (Ontop > clientH) {
+                divs.style.display = "block";
+            } else {
+                divs.style.display = "none";
+            }
+            toTop(); //调用回到顶部函数；
+        }
+
+        //回到顶部函数;
+        function toTop() {
+            divs.onclick = function () {
+                timer = setInterval(function () {
+                    //让滚动条到顶部的距离自动缩减到0;
+                    document.documentElement.scrollTop = document.body.scrollTop = Math.floor(Ontop - 200);//兼容性设置;
+                    //设置定时器
+                    if (Ontop === 0 || document.documentElement.scrollTop === 0) {
+                        clearInterval(timer);
+                    }
+                }, 10);
+            }
+        }
+    }
+
+</script>
+</body>
+</html>

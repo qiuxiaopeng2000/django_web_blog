@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>编辑个人资料</title>
+    <!--    <link href="/statics/css/bootstrap.min.css" rel="stylesheet">-->
+    <link href="/static/plugins/bootstrap.min%20(1).css" rel="stylesheet">
+    <style>
+        h1, h2, h3, h4, h5, h6, p {
+            font-family: "Cabin Sketch", cursive, SimHei;
+        }
+
+        .myrow {
+            width: 1000px;
+            margin: 0 auto;
+        }
+
+        .backimg {
+        {#margin-top: 50px;#} height: 260px;
+        {#background-color: #F8F8FF;#} z-index: -1;
+        }
+
+        .backimg .b {
+            float: right;
+            margin-top: 20px;
+            margin-right: 20px;
+            /*border: 1px solid red;*/
+        }
+
+        .user-avatar {
+            height: 160px;
+            width: 160px;
+            margin-top: -20px;
+            margin-left: -20px;
+            /*border: 1px solid red;*/
+        }
+
+        .nickname {
+            display: inline-block;
+            margin-top: 10px;
+            margin-left: 20px;
+            width: 730px;
+            /*border: 1px solid red;*/
+        }
+
+        .nickname .nname {
+            display: inline-block;
+            height: 30px;
+            line-height: 30px;
+        }
+
+        .personal-info {
+            display: inline-block;
+            height: 36px;
+            width: 200px;
+            line-height: 36px;
+        }
+
+        .personal-context {
+            width: 730px;
+            padding-top: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #B0C4DE;
+        }
+        h1, h2, h3, h4, h5, h6, p {
+        font-family: "Cabin Sketch", cursive, SimHei;
+    }
+    </style>
+</head>
+<body>
+{#{% include "head.html" %}#}
+<div class="container justify-content-center">
+
+    <form method="post" action="{% url 'user_info_edit' user.id %}" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {#        {% if user_info.background_img %}#}
+        {#            <div class="backimg" style="margin-left: 200px;">#}
+        {#                <label for="background_img" id="backimg">#}
+        {#                    <img style="height: 240px;width: 1000px" src="{{ user_info.background_img.url }}">#}
+        {#                </label>#}
+        {#                <input type="file" id="background_img" name="background_img" style="display: none" accept="image/*">#}
+        {#            <img src="{{ user_info.background_img.url }}" style="height: 260px;width: 1100px;">#}
+        {#            </div>#}
+        {#        {% endif %}#}
+        <div class="myrow" style="margin-left: 250px; margin-top: 40px">
+
+            {% if user_info.portrait %}
+                <div class="col-md-3" style="margin-left: 230px">
+                    <label for="portrait" id="userimg"><img src="{{ user_info.portrait.url }}"
+                                                            class="img-rounded user-avatar"></label>
+                    <input type="file" id="portrait" name="portrait" style=" display: none" accept="image/*">
+                </div>
+            {% else %}
+                <h5 class="col-md-4">暂无头像</h5>
+            {% endif %}
+
+            <div class="col-md-9" style="background-color: 	#FFFAFA">
+                <div class="nickname" style="margin-left: 260px">
+                    <h1 class="nname">{{ user.username }}</h1>
+                </div>
+                <!-- 简单的自我介绍 -->
+                <div class="input-group input-group-lg personal-context">
+                    <h4 class="personal-info">
+                        个性签名
+                    </h4>
+                    <input type="text" style="height: 35px;width: 500px" name="signature" id="signature"
+                           value="{{ user_info.signature }}"
+                           required/>
+                </div>
+                <!-- 个人电话 -->
+                <div class="input-group input-group-lg personal-context">
+                    <h4 class="personal-info">
+                        电话
+                    </h4>
+                    <input type="text" style="height: 35px;width: 200px" name="phone" id="phone"
+                           value="{{ user_info.phone }}"
+                           required/>
+                </div>
+                <!-- 年龄 -->
+                <div class="input-group input-group-lg personal-context">
+                    <h4 class="personal-info">
+                        年龄
+                    </h4>
+                    <input type="text" style="height: 35px;width: 200px" name="age" id="age"
+                           value="{{ user_info.age }}"
+                           required/>
+                </div>
+                <!-- 性别 -->
+                <div class="input-group input-group-lg personal-context">
+                    <h4 class="personal-info">
+                        性别
+                    </h4>
+                    <label>
+                        <select style="height: 35px;width: 200px">
+                            <option value="无">请选择你的性别</option>
+                            <option value="男">男</option>
+                            <option value="女" selected>女</option>
+                            <option value="保密">保密</option>
+                        </select>
+                    </label>
+                </div>
+                <!-- 自我介绍 -->
+                <div class="input-group input-group-lg personal-context">
+                    <div style="width: 730px;height: 200px;">
+                        <div class="col-md-3">
+                            <h4 style="margin-top: 20px;">
+                                个人简介
+                            </h4>
+                        </div>
+                        <label for="self_introduce"></label>
+                        <textarea rows="7" cols="65" style="resize: none;margin-top: 30px" id="self_introduce"
+                                  name="self_introduce">{{ user_info.self_introduce }}</textarea>
+                    </div>
+                </div>
+                <!-- 资料提交上去 -->
+                <div class="btn-group input-group-lg personal-context">
+
+                    <div align="left" style="float: left">
+                        <button type="submit" class="btn btn-primary">提交
+                        </button>
+                    </div>
+                    <div align="right" style="float: right; margin-left: 50px">
+                        <button type="button" class="btn btn-light"
+                        >
+                            <a href="{% url "blog_list" %}">返回</a></button>
+                    </div>
+
+
+                </div>
+                {#                <div class="input-group input-group-lg personal-context">#}
+                {#                    <button type="button" style="text-align: center;margin-left: 45%;">#}
+                {#                        <a href="{% url "blog_list" %}">返回</a>#}
+                {#                    </button>#}
+                {#                </div>#}
+            </div>
+
+
+        </div>
+    </form>
+</div>
+</body>
+</html>

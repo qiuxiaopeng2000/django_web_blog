@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    写文章
+{% endblock title %}
+
+
+{% block content %}
+    <div class="container1">
+        <div class="row border">
+        <div class="col-12">
+            <br>
+            <form method="post" action=".">
+                <!-- Django中需要POST数据的地方都必须有csrf_token, 防御CSRF攻击 -->
+                {% csrf_token %}
+                <h1 align="center">新建文章</h1>
+                <div class="form-group">
+                    <label for="title">文章标题</label>
+                    <input type="text" class="form-control" id="title" name="title">
+                </div>
+
+                <div class="form-group">
+                    <label for="category">栏目</label>
+                    <select class="form-control " id="category" name="category">
+                        <option value="none">请选择文章分类..</option>
+                        {% for item in category %}
+                            <option value="{{ item.id }}">{{ item.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="tags">标签</label>
+                    <input type="text" class="form-control " id="tags" name="tags">
+                </div>
+
+                <div class="form-group">
+                    <label for="body">文章内容</label>
+                    {#                    <textarea type="text" class="form-control" id="body" name="body" rows="12">#}
+                    {#                        #}
+                    {#                    </textarea>#}
+                    <div align="center">
+{#comment_form.media是编辑器自身的渲染代码，comment_form.body则是评论正文字段。#}
+                        {{ blog_form.media }}
+                        {{ blog_form.body }}
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">完成</button>
+            </form>
+        </div>
+    </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <style>
+
+    </style>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock title %}</title>
+    <link rel="stylesheet" href="/static/plugins/font-awesome-4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="/static/md_css/monokai.css">
+    <link rel="stylesheet" href="/static/plugins/bootstrap.min%20(1).css">
+    <link rel="stylesheet" href="/static/css/blog_style.css">
+</head>
+<body>
+
+<script>
+    $(".django-ckeditor-widget").removeAttr('style');
+</script>
+{% include 'head.html' %}
+{#{% include 'my_artical.html' %}#}
+<!-- 为具体页面预留位置 -->
+
+{% block content %}
+    {#        <img src="{% static '/image/iso-republic-art-supplies-12.jpg' %}" alt="" style="height: 100%">#}
+{% endblock content %}
+
+
+{#{% include 'foot.html' %}#}
+
+<script type="text/javascript" src="/static/plugins/jquery-3.6.1.js"></script>
+<script type="text/javascript" src="/static/plugins/popper.js.1.14.3/content/Scripts/popper.min.js"></script>
+<script type="text/javascript" src="/static/plugins/bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript" src="/static/plugins/layer-v3.5.1/layer/layer.js"></script>
+<script type="text/javascript" src="/static/plugins/csrf.js"></script>
+{% include 'back_to_top_func.html' %}
+{% block script %}{% endblock script %}
+<style>
+    html, body {
+        height: 100%;
+        margin: 0;
+        font-family: "Cabin Sketch", cursive, SimHei;
+    }
+
+    h1, h2, h3, h4, h5, h6, p {
+        font-family: "Cabin Sketch", cursive, SimHei;
+    }
+
+    .border {
+        border: 1px solid #dddddd;
+        border-radius: 5px;
+        box-shadow: 5px 5px 20px #aaa;
+        margin-top: 20px;
+        margin-right: 20px;
+    }
+
+    .form-control1 {
+        display: block;
+        width: 100%;
+        height: calc(6rem + 2px);
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+
+    .container1 {
+        width: 100%;
+        padding-right: 350px;
+        padding-left: 350px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+</style>
+</body>
+</html>

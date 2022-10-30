@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+    我的粉丝
+{% endblock title %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row mt-2" style="margin-left: 80px">
+        <h3>我的粉丝</h3>
+            {% for fans_info in all_fans_info %}
+                <div class="col-sm-1" >
+                    <a href="{% url 'my_blog' fans_info.user %}">
+                        <img src="{{ fans_info.portrait.url }}" alt=""
+                             style="max-width: 100%; border-radius: 20%; min-width: 50%">
+                    </a>
+                </div>
+                <div class="col-lg-8">
+                <h4>
+                    <b>
+                            <span style="color: black">
+                                {{ fans_info.user }}
+                            </span>
+                    </b>
+                </h4>
+                <div>
+                    <p style="color: gray">
+                        {{ fans_info.signature }}
+                    </p>
+                </div>
+                </div>
+
+{#                <div class="col-sm-2 offset-sm-2 justify-content-center" style="display: flex; align-items: center; float: right" >#}
+{#                    <i class="fa fa-minus-square" aria-hidden="true">已关注 </i>#}
+{#                </div>#}
+                <hr>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}

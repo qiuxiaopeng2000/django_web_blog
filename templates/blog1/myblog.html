@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}
+    我的博文
+{% endblock title %}
+
+{% block content %}
+    <div class="left-right">
+        <div class="row">
+            <div class="col-md-1"></div>
+
+            <div class="col-md-2">
+                <div class="id-navigation">
+                    <div class="card text-white bg-primary mb-3" style="max-width: 10rem;">
+                        <div class="card-header">全站导航</div>
+                        <div class="card-body">
+                            <h4 class="card-title">文章分类</h4>
+                            <p class="card-text">
+                                {% for item in all_category %}
+                                    <a href="{% url 'blog_list_category' item.id %}"
+                                       style="color: white">{{ item.name }}</a>
+                                {% endfor %}
+                            </p>
+                            {#                                <p class="card-text">Some quick example text to build on the card title and make up the#}
+                            {#                                    bulk of the card's content.</p>#}
+                        </div>
+                        <div class="card-footer">
+                            <h4 class="card-title">文章排序</h4>
+                            <p class="card-text">
+                                <a href="{% url 'blog_list' %}?search={{ search }}&column={{ category }}"
+                                   style="color: white">
+                                    最新</a>
+                                <a href="{% url 'blog_list' %}?order=num_of_views&search={{ search }}&column={{ column }}"
+                                   style="color: white">
+                                    最热</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="blog-list">
+                    {% for blog in my_blogs %}
+                        <div class="row">
+
+                            <h2>{{ blog.title }}</h2>
+                            <blockquote class="blockquote">
+                                <p class="mb-0">{{ blog.created_time|date:'Y-m-d H:i:s' }}</p>
+                            </blockquote>
+
+                            <div>
+                                <p class="desc" style="color: black">{{ blog.body|slice:'100'|safe }}...</p>
+                            </div>
+
+                            <div class="icon">
+                                <span>
+                                    <img src="/static/icon/browse.png" alt="浏览量">
+                                    {{ blog.num_of_views }}
+                                    <img src="/static/icon/like.png" alt="点赞量">
+                                    {{ blog.num_of_likes }}
+                                    <img src="/static/icon/comment.png" alt="评论量">
+                                    {{ blog.comments.count }}&nbsp;&nbsp;&nbsp;
+                                    <a type="button" class="btn btn-primary btn-sm"
+                                       href="{% url 'blog_detail' blog.id %}">阅读本文</a>
+                                </span>
+                            </div>
+
+                            {% include 'splitline.html' %}
+
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="col-md-1"></div>
+        </div>
+    </div>
+{% endblock content %}
+
+
+

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+    我的关注
+{% endblock title %}
+
+{% block content %}
+    {#    <ul class="nav nav-tabs" role="tablist">#}
+    {#            <li class="nav-item" role="presentation">#}
+    {#                <a class="nav-link active" data-bs-toggle="tab" href="{% url "my_fans" user.id%}" aria-selected="true" role="tab">粉丝</a>#}
+    {#            </li>#}
+    {#       </ul>#}
+    <div class="container">
+        <div class="row mt-2" style="margin-left: 50px; width: 100%">
+        <h3>我的关注</h3>
+            {% for follow_info in all_follow_info %}
+                <div class="col-sm-1">
+                    <a href="{% url 'my_blog' follow_info.user %}">
+                        <img src="{{ follow_info.portrait.url }}" alt=""
+                             style="max-width: 100%; border-radius: 20%; min-width: 50%">
+                    </a>
+                </div>
+                <div class="col-lg-8">
+                    <h4>
+                    <b>
+                            <span style="color: black">
+                                {{ follow_info.user }}
+                            </span>
+                    </b>
+                    </h4>
+                    <div>
+                        <p style="color: gray">
+                            {{ follow_info.signature }}
+                        </p>
+                    </div>
+                </div>
+
+{#                <div class="col-sm-2 justify-content-center offset-sm-2" style=" display: flex; align-items: center; float: right" >#}
+{#                    <i class="fa fa-minus-square" aria-hidden="true">已关注 </i>#}
+{#                </div>#}
+                <br>
+                <hr>
+            {% endfor %}
+        </div>
+
+
+    </div>
+{% endblock content %}

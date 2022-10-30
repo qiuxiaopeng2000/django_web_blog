@@ -1,0 +1,290 @@
+/** {*/
+/*    margin: 0;*/
+/*    padding: 0;*/
+/*    box-sizing: border-box;*/
+/*}*/
+
+/* 给整个页面加上背景图 */
+html, body {
+    height: 100%;
+}
+
+/* 给整个页面加上背景图 */
+/*body {*/
+/*    background-image: url('/static/image/iso-republic-art-supplies-12.jpg');*/
+/*    background-repeat: no-repeat;*/
+/*    background-position: center center;*/
+/*    background-size: 100% 100%;*/
+/*}*/
+
+/*page {*/
+/*    height: 100%;*/
+/*}*/
+
+/*body{*/
+/*   background-image: url(../image/星光.jpg); */
+/*   background-repeat: no-repeat;*/
+/*   background-position:center center;*/
+/*   background-size: cover;*/
+/*}*/
+
+.blog {
+    width: 100%;
+    padding: 10px 20px;
+}
+
+.blog .title {
+    text-align: center;
+    font-size: 25px;
+    font-weight: 700;
+    padding-top: 10px;
+    padding-bottom: 5px;
+}
+
+.blog .date {
+    text-align: center;
+    padding-bottom: 10px;
+    color: black;
+}
+
+.blog .desc {
+    text-indent: 2em;
+}
+
+.blog .detail {
+    display: block;
+    width: 120px;
+    color: black;
+    height: 30px;
+    border: 2px solid black;
+    text-align: center;
+    line-height: 30px;
+    text-decoration: none;
+    margin: 10px auto;
+    transition: all 1s;
+}
+
+.blog a {
+    /*设置成块级元素，方便设置尺寸和边距  */
+    display: block;
+    width: 140px;
+    height: 40px;
+    margin: 10px auto;
+    border: 2px black solid;
+
+    color: black;
+    line-height: 40px;
+    text-align: center;
+    text-decoration: none;
+    /* 如果想让点击时变化的柔和一些，可以加还上过渡效果 */
+    transition: all 1s;
+
+}
+
+.blog .detail:hover {
+    background-color: blue;
+    color: white;
+}
+
+
+.nav {
+    width: 100%; /*和整个页面一样宽*/
+    height: 50px;
+    /* 设置导航栏的透明度 */
+    background-color: rgba(51, 51, 51, 0.4);
+    color: white;
+
+    /* 导航栏内部的内容，都是一行排列的，就需要使用flex布局来进行操作 */
+    display: flex;
+    /* 让logo圆形图居中 */
+    align-items: center;
+}
+
+.nav img {
+    width: 40px;
+
+    height: 40px;
+    /* 将logo设置为圆的 */
+    border-radius: 50%;
+    /* logo的左右边距设置距离，让其与左右分开 */
+    margin-left: 30px;
+    margin-right: 10px;
+}
+
+.nav .spacer {
+    /*相对于是父元素（.nav）宽度的70%  */
+    width: 70%;
+}
+
+.nav a {
+    color: white;
+    /* 去掉下划线 */
+    text-decoration: none;
+    /* 放开间距，上下是0，左右是10px */
+    padding: 0 10px;
+}
+
+
+
+/* 接下来是版心相关的样式 */
+.containers {
+
+    /* 当前版心并不是和窗口一样宽 */
+    width: auto;
+    /* css3提供的内置函数，让版心和导航栏下面一样高，必须左右有空格 */
+    /*height: calc(100% - 50px);*/
+    /*height: auto !important;*/
+    height: 100%;
+    /* 水平居中 */
+    margin: 0 auto;
+    /*position : relative;*/
+    display: flex;
+    align-items: center;
+    /* 保证左右中间背景有缝 */
+    justify-content: space-between;
+    position: absolute;
+
+}
+
+/*.containers .container-myself {*/
+/*    margin: 10px;*/
+/*    height: 100%;*/
+/*    !* 让左右中间有缝 *!*/
+/*    width: 1000px;*/
+/*    !* background-color: rgb(0,128,0); *!*/
+/*    background-color: rgba(255, 255, 255, 0.4);*/
+/*    border-radius: 10px;*/
+/*    !* 防止页面元素满了，滚动条到外面，让元素内部滚动 *!*/
+/*    overflow: auto;*/
+/*    !*margin: 10px;*!*/
+/*    padding: 10px;*/
+
+/*}*/
+
+
+/*.footer {*/
+/*    position: absolute; !*相对于父元素contanier定位*!*/
+/*    width: 100%;*/
+/*    bottom: 0;!*始终距离它的父元素的底部为0px.则是处于父元素的最底*!*/
+/*    height: 50px;*/
+/*}*/
+.containers .container-left {
+    height: 100%;
+    width: 300px;
+    border-radius: 10px;
+    margin-left: 100px;
+    position: relative;
+    /*background-color: rgba(255, 255, 255, 0.3);*/
+}
+
+.containers .container-right {
+    height: 100%;
+    /* 让左右中间有缝 */
+    width: 600px;
+    /* background-color: rgb(0,128,0); */
+    /*background-color: rgba(255, 255, 255, 0.4);*/
+    border-radius: 10px;
+    /* 防止页面元素满了，滚动条到外面，让元素内部滚动 */
+    /*overflow: auto;*/
+    /*margin: 10px;*/
+    padding: 10px;
+    position: relative;
+
+}
+
+/* 接下来实现card的样式 */
+.cards {
+    /*background-color: rgba(255, 255, 255, 0.4);*/
+    border-radius: 10px;
+    /* 这里的30px的意思是上下左右都是30px */
+    padding: 10px;
+    height: auto;
+    /*width: 200px;*/
+}
+
+
+.cards img {
+    /* 这里card默认是和父元素container宽度一样是200px */
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+}
+
+.cards h3 {
+    /* 控制h3居中 */
+    text-align: center;
+    /* 控制h3四个方向距离都是10px */
+    padding: 10px;
+}
+
+.cards a {
+    /* a默认是行内元素，行内元素的很多边距不生效，为了简单起见，让直接设为块级元素*/
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    /*color: #999;*/
+    padding: 10px;
+}
+
+.cards .counter {
+    display: flex;
+    justify-content: space-around;
+    padding: 5px;
+}
+
+.cards .countera {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+}
+
+.blog-content {
+    padding: 30px;
+}
+
+/* 博客标题 */
+.blog-content h3 {
+    text-align: center;
+    padding-top: 40px;
+    padding-bottom: 20px;
+    font-size: 25px;
+}
+
+/* 博客日期 */
+.blog-content .date {
+    text-align: center;
+    padding-bottom: 10px;
+    color: grey;
+}
+
+.blog-content .title {
+    text-align: center;
+    font-size: 25px;
+    font-weight: 700;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.blog-content .detail {
+    display: block;
+    width: 120px;
+    color: black;
+    height: 30px;
+    /*border: 10px solid black;*/
+    /*text-align: center;*/
+    line-height: 30px;
+    text-decoration: none;
+    margin: 10px auto;
+    transition: all 1s;
+    text-indent: 2em;
+    padding: 10px 0;
+}
+
+/* 博客内容 */
+.blog-content p {
+    text-indent: 2em;
+    padding: 10px 0;
+}
+
+

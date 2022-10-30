@@ -1,0 +1,13 @@
+{% load i18n %}
+{% load account socialaccount %}
+{% get_providers as socialaccount_providers %}
+{% if socialaccount_providers %}
+    <div class="socialaccount_ballot">
+        <h5 class="mb-2 mt-4">第三方登录：</h5>
+        <ul class="socialaccount_providers">
+            {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+        </ul>
+        <h5 class="mb-2 mt-4">本地登录：</h5>
+    </div>
+    {% include "socialaccount/snippets/login_extra.html" %}
+{% endif %}
