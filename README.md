@@ -7,10 +7,10 @@
 4. 第三方登录
 5. 项目部署
 ### 技术栈
-> 后端：Django
-> 前端：html、css、Javascript
-> 数据库：MySQL
-> 插件：Bootstrap、Jquery、Layer、csrf（用于实现Ajax的csrf验证）
+> 1. 后端：Django
+> 2. 前端：html、css、Javascript
+> 3. 数据库：MySQL
+> 4. 插件：Bootstrap、Jquery、Layer、csrf（用于实现Ajax的csrf验证）
 ### 主要实现的功能
 1. userinfo模块
 > 1. 管理员账户
