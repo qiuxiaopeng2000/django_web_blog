@@ -22,9 +22,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-yczt^zv6g=rx*$ik%pnx#mes!dw&eg1@c6kh%%ay#l$0!p(a*o"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# 关闭调试模式, 部署时要关闭调试模式，避免安全性问题（此时 Django 就不再处理静态资源了）。
+DEBUG = False
 
-ALLOWED_HOSTS = []
+# 允许的服务器
+ALLOWED_HOSTS = ['1.15.93.63']
 
 # Application definition
 
