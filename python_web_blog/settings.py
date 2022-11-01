@@ -126,6 +126,7 @@ TEMPLATES = [
     },
 ]
 
+
 AUTHENTICATION_BACKENDS = (
     # Django 后台可独立于 allauth 登录
     'django.contrib.auth.backends.ModelBackend',
